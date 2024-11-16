@@ -48,8 +48,10 @@ const ResetPassword = () => {
         },
         false
       );
+      
       let response = apiResponse(true, resData, setLoading);
       if (response?.isValidate) {
+        
         navigate("/");
         // dispatch(userToken(response?.data?.data?.token));
         // dispatch(userInfo(response?.data?.data?.user));

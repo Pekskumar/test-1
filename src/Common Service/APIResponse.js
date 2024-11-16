@@ -1,7 +1,8 @@
 // import { toast } from "react-toastify";
 import toast, { Toaster } from 'react-hot-toast';
+
 export const apiResponse = (isMsgDisplay, data, setLoading) => {  
-  if (data?.status_code === 0) {
+ if (parseInt(data?.status_code) === 0) {
     if (isMsgDisplay) {
       setLoading(false);
       toast.error(data?.message);
@@ -9,7 +10,11 @@ export const apiResponse = (isMsgDisplay, data, setLoading) => {
     if (setLoading) {
       setLoading(false);
     }
-  } else if (data?.status_code === 1) {
+    return {
+      isValidate: false,
+      data: [],
+    };
+  } else if (parseInt(data?.status_code) === 1) {
     if (setLoading) {
       setLoading(false);
     }
@@ -20,9 +25,9 @@ export const apiResponse = (isMsgDisplay, data, setLoading) => {
       isValidate: true,
       data: data,
     };
-  } else if (data?.status_code === 2) {
-    localStorage.clear();
-    window.location.pathname = "/";
+  } else if (parseInt(data?.status_code) === 2) {
+    // localStorage.clear();
+    // window.location.pathname = "/";
   } else if (data?.name === "AxiosError") {
     if (setLoading) {
       setLoading(false);
@@ -32,9 +37,9 @@ export const apiResponse = (isMsgDisplay, data, setLoading) => {
         status: 0,
         message: toast.error("Unprocessable Entity"),
       };
-    } else if (data?.response?.status === 401) {      
-      localStorage.clear();
-      window.location.pathname = "/";
+    } else if (data?.response?.status === 401) {
+      // localStorage.clear();
+      // window.location.pathname = "/";
     } else if (data?.response?.status === 405) {
       return {
         status: 0,
