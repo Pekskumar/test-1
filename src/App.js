@@ -23,7 +23,7 @@ function App() {
 
   const AllRoutes = () => (
     <Routes>
-      {/* <Route path="*" element={<Navigate to="/" />} /> */}
+      <Route path="*" element={<Navigate to="/" />} />
       <Route path="/" element={<Layout />}>
         <Route index element={<Navigate to="/home" replace />} />
         <Route
@@ -63,7 +63,7 @@ function App() {
   );
   const AuthRoutes = () => (
     <Routes>
-      {/* <Route path="*" element={<Navigate to="/" />} /> */}
+      <Route path="*" element={<Navigate to="/" />} />
       <Route path="/" element={<AuthLayout />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
