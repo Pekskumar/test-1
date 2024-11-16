@@ -1,4 +1,4 @@
-import { default as React, useState } from "react";
+import { default as React, useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 // import { toast } from "react-toastify";
 import { apiResponse } from "../Common Service/APIResponse";
@@ -14,26 +14,32 @@ const ChangePasswordModal = (props) => {
   const [Loading, setLoading] = useState(false);
 
   const [input, setInput] = useState({
-    oldPassword: "",
-    confirmNewPassword: "",
-    newPassword: "",
+    emailid: "",
+    displayname: "",
+    password: "",
+    profilepic: "",
     errors: {
-      oldPassword: "",
-      confirmNewPassword: "",
-      newPassword: "",
+      emailid: "",
+      displayname: "",
+      password: "",
       ValidationRules: [
         {
-          FieldName: "oldPassword",
+          FieldName: "password",
           ValidationType: "required",
           ValidationMessage: "This Field is a required field",
         },
         {
-          FieldName: "confirmNewPassword",
+          FieldName: "emailid",
           ValidationType: "required",
           ValidationMessage: "This Field is a required field",
         },
         {
-          FieldName: "newPassword",
+          FieldName: "emailid",
+          ValidationType: "email",
+          ValidationMessage: "Incorrect email address",
+        },
+        {
+          FieldName: "displayname",
           ValidationType: "required",
           ValidationMessage: "This Field is a required field",
         },
@@ -60,7 +66,7 @@ const ChangePasswordModal = (props) => {
       let resData = await apiCall(
         {
           method: "POST",
-          url: API_URL.BASEURL + API_URL.CHANGEPASSWORD,
+          url: API_URL.BASEURL + API_URL.UPDATE_PROFILE,
           body: body,
         },
         false
@@ -73,6 +79,7 @@ const ChangePasswordModal = (props) => {
       }
     }
   }
+
 
   return (
     <>

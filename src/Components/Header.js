@@ -10,11 +10,10 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { userInfo, userToken } from "../ReduxTookit/UserInfoSlice";
 import ChangePasswordModal from "../Modals/ChangePasswordModal";
+import ProfileUpdateModal from "../Modals/ProfileUpdateModal";
 
 const Header = () => {
-  const UserData = useSelector((state) => state.userinfo.UserInfo);
-  console.log("UserData ::",UserData);
-  
+  const UserData = useSelector((state) => state.userinfo.UserInfo);  
   const [ChangePWDModalShow, setChangePWDModalShow] = useState(false);
   let navigate = useNavigate();
 
@@ -77,7 +76,8 @@ const Header = () => {
                 </Dropdown.Menu> */}
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => setChangePWDModalShow(true)}>
-                    Change Password
+                    Update Profile
+                    {/* Change Password */}
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => navigate("/users")}>
                     Users
@@ -94,8 +94,14 @@ const Header = () => {
           </div>
         </div>
       </Container>
-      {ChangePWDModalShow && (
+      {/* {ChangePWDModalShow && (
         <ChangePasswordModal
+          show={ChangePWDModalShow}
+          onHide={() => setChangePWDModalShow(false)}
+        />
+      )} */}
+      {ChangePWDModalShow && (
+        <ProfileUpdateModal
           show={ChangePWDModalShow}
           onHide={() => setChangePWDModalShow(false)}
         />

@@ -50,7 +50,6 @@ const AddEditTransactionsModal = (props) => {
 
   useEffect(() => {
     if (props?.data) {
-      debugger
       setInput({
         ...input,
         ["userId"]: props?.data?.userId,
