@@ -23,7 +23,7 @@ function App() {
 
   const AllRoutes = () => (
     <Routes>
-      <Route path="*" element={<Navigate to="/" />} />
+      {/* <Route path="*" element={<Navigate to="/" />} /> */}
       <Route path="/" element={<Layout />}>
         <Route index element={<Navigate to="/home" replace />} />
         <Route
@@ -63,7 +63,7 @@ function App() {
   );
   const AuthRoutes = () => (
     <Routes>
-      <Route path="*" element={<Navigate to="/" />} />
+      {/* <Route path="*" element={<Navigate to="/" />} /> */}
       <Route path="/" element={<AuthLayout />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -73,7 +73,7 @@ function App() {
     <>
       <Toaster position="bottom-center" />
       <Router 
-      basename={process.env.PUBLIC_URL}
+      // basename={process.env.PUBLIC_URL}
       >{is_logged ? <AllRoutes /> : <AuthRoutes />}</Router>
     </>
   );
