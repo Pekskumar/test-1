@@ -40,7 +40,6 @@ const Users = () => {
   const [TransactionType, setTransactionType] = useState();
   const [SelectedTransactionData, setSelectedTransactionData] = useState();
   const [TransactionList, setTransactionList] = useState({});
-console.log("UserData ::",UserData);
 
   async function bindList() {
     setLoading(true);
