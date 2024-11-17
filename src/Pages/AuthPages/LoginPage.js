@@ -48,8 +48,8 @@ const LoginPage = (props) => {
     if (obj.isValid) {
       setLoading(true);
       let body = {
-        emailid: input?.emailid.trim(),
-        password: input?.password.trim(),
+        emailid: input?.emailid?.trim(),
+        password: input?.password?.trim(),
       };
       let resData = await apiCall(
         {

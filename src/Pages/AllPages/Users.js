@@ -40,6 +40,7 @@ const Users = () => {
   const [TransactionType, setTransactionType] = useState();
   const [SelectedTransactionData, setSelectedTransactionData] = useState();
   const [TransactionList, setTransactionList] = useState({});
+console.log("UserData ::",UserData);
 
   async function bindList() {
     setLoading(true);
@@ -221,7 +222,7 @@ const Users = () => {
                                         ? "Administrator"
                                         : "User"}
                                     </td>
-                                    {UserData?.usertype !== "client" && itemE?.createdBy !== null ? (
+                                    {UserData?.usertype !== "client" && itemE?.createdBy !== null? (
                                       <td className="width-500px">
                                         <div className="d-flex     justify-content-end">
                                           {/* <span
@@ -258,21 +259,7 @@ const Users = () => {
                                           </span>
                                         </div>
                                       </td>
-                                    ) :
-                                      <td className="width-500px">
-                                        <div className="d-flex     justify-content-end">
-                                          <span
-                                            // onClick={() =>
-                                            //   fnAddEditTransactions(
-                                            //     "Edit",
-                                            //     itemE
-                                            //   )
-                                            // }
-                                            onClick={() => setChangePWDModalShow(true)}
-                                            className="me-2"
-                                          >
-                                            <EditIcon />
-                                          </span></div></td>}
+                                    ):<td className="width-500px"></td> }
                                   </tr>
                                 )
                               )}
