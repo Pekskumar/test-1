@@ -116,7 +116,11 @@ const ProfileUpdateModal = (props) => {
           displayname: response?.data?.data?.displayname,
         }
         dispatch(userInfo(temp));
-        props.onHide()
+        props.onHide();
+        if (props?.bindList) {
+          props?.bindList();
+        }
+
       }
       if (!response?.isValidate) {
         console.log("Error  getting country list", response);

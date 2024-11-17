@@ -1,29 +1,23 @@
 import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
-import { Col, Form, Row, Table } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
+import { Col, Row, Table } from "react-bootstrap";
 import { confirmAlert } from "react-confirm-alert";
 import DatePicker from "react-multi-date-picker";
 import DatePanel from "react-multi-date-picker/plugins/date_panel";
 import { useDispatch, useSelector } from "react-redux";
+import DeleteIcon from "../../Assets/Images/DeleteIcon";
+import EditIcon from "../../Assets/Images/EditIcon";
+import Nodata from "../../Assets/Images/Nodata.png";
+import PlusIcon from "../../Assets/Images/PlusIcon";
 import { apiResponse } from "../../Common Service/APIResponse";
 import { API_URL } from "../../Common Service/APIRoute";
 import { apiCall } from "../../Common Service/AxiosService";
 import {
-  DateFilterArray,
-  commonservices,
+  commonservices
 } from "../../Common Service/CommonServices";
-import AddEditTransactionsModal from "../../Modals/AddEditTransactionsModal";
-import { transactionList } from "../../ReduxTookit/UserInfoSlice";
-import OffCanvasExample from "../../Modals/OffCanvasExample";
-import EditIcon from "../../Assets/Images/EditIcon";
-import DeleteIcon from "../../Assets/Images/DeleteIcon";
-import Nodata from "../../Assets/Images/Nodata.png";
-import FoodIcon from "../../Assets/Images/FoodIcon";
-import PlusIcon from "../../Assets/Images/PlusIcon";
-import Loader from "../../Components/Loader";
-import AddEditUserModal from "../../Modals/AddEditUserModal";
 import NewLoader from "../../Components/NewLoader";
+import AddEditUserModal from "../../Modals/AddEditUserModal";
+import ProfileUpdateModal from "../../Modals/ProfileUpdateModal";
 
 const Users = () => {
   const UserData = useSelector((state) => state.userinfo.UserInfo);
@@ -32,6 +26,7 @@ const Users = () => {
     enddate: new Date(),
   });
   const tableRef = useRef();
+  const [ChangePWDModalShow, setChangePWDModalShow] = useState(false);
   const dispatch = useDispatch();
   const [DatePickShow, setDatePickShow] = useState(false);
   const [UserList, setUserList] = useState([]);
@@ -39,7 +34,7 @@ const Users = () => {
     moment().format("YYYY/MM/DD"),
     moment().format("YYYY/MM/DD"),
   ]);
-  
+
   const [Loading, setLoading] = useState(false);
   const [TransactionMOdalShow, setTransactionMOdalShow] = useState(false);
   const [TransactionType, setTransactionType] = useState();
@@ -118,80 +113,8 @@ const Users = () => {
       console.log("Error  getting country list", response);
     }
   }
+  console.log("TransactionList ::", TransactionList);
 
-  function HandleDateChangeFilter(event) {
-    setDatePickShow(false);
-
-    if (event === "Last 7 Days") {
-      setStartEndDate({
-        startdate: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000),
-        enddate: new Date(),
-      });
-    } else if (event === "Last 28 Days") {
-      setStartEndDate({
-        startdate: new Date(new Date().getTime() - 28 * 24 * 60 * 60 * 1000),
-        enddate: new Date(),
-      });
-    } else if (event === "All time (Till - Today)") {
-      setStartEndDate({
-        startdate: new Date("1900-01-01"),
-        enddate: new Date(),
-      });
-    } else if (event === "Last 30 Days") {
-      setStartEndDate({
-        startdate: new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000),
-        enddate: new Date(),
-      });
-    } else if (event === "Last 90 Days") {
-      setStartEndDate({
-        startdate: new Date(new Date().getTime() - 90 * 24 * 60 * 60 * 1000),
-        enddate: new Date(),
-      });
-    } else if (event === "Last 12 Months") {
-      setStartEndDate({
-        startdate: new Date(new Date().getTime() - 365 * 24 * 60 * 60 * 1000),
-        enddate: new Date(),
-      });
-    } else if (event === "Yesterday") {
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
-      yesterday.setHours(0, 0, 0, 0);
-      setStartEndDate({
-        startdate: yesterday,
-        enddate: yesterday,
-      });
-    } else if (event === "Tomorrow") {
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() + 1);
-      yesterday.setHours(0, 0, 0, 0);
-      setStartEndDate({
-        startdate: yesterday,
-        enddate: yesterday,
-      });
-    } else if (event === "Today") {
-      setStartEndDate({
-        startdate: new Date(),
-        enddate: new Date(),
-      });
-    } else if (event === "Last Calendar Year") {
-      const today = new Date();
-      const year = today.getFullYear();
-      setStartEndDate({
-        startdate: new Date(year - 1, 0, 1),
-        enddate: new Date(year, 0, 1),
-      });
-    } else if (event === "This Year (January - Today)") {
-      const today = new Date();
-      const year = today.getFullYear();
-      setStartEndDate({
-        startdate: new Date(year, 0, 1),
-        enddate: new Date(),
-      });
-    } else if (event === "Custom") {
-      setDatePickShow(true);
-    }
-  }
-  
   return (
     <>
       <div>
@@ -205,29 +128,9 @@ const Users = () => {
               >
                 <PlusIcon />
               </div>
-              {/* <OffCanvasExample
-              placement="end"
-              name="Filter"
-              data={FilterDataList}
-              FilterData={setFilterDataList}
-              bindList={bindList}
-            /> */}
             </div>
           )}
-          {/* <div>
-            <Form.Select
-              onChange={(e) => HandleDateChangeFilter(e.target.value)}
-              aria-label="Default select example"
-            >
-              {DateFilterArray.map((itemd, indexd) => (
-                <option key={indexd} value={itemd}>
-                  {itemd}
-                </option>
-              ))}
-            </Form.Select>
-          </div> */}
         </div>
-
         {DatePickShow && (
           <div>
             <DatePicker
@@ -276,21 +179,22 @@ const Users = () => {
                                 (itemE, indexE) => (
                                   <tr key={indexE}>
                                     <td className="width-75px ">
-                                      <div
-                                        className="pro-img"
-                                        style={{
-                                          color: '#fff',
-                                          backgroundColor: `rgba(${Math.floor(
-                                            Math.random() * 256
-                                          )}, ${Math.floor(
-                                            Math.random() * 256
-                                          )}, ${Math.floor(
-                                            Math.random() * 256
-                                          )}, 0.6)`,
-                                        }}
-                                      >
-                                        {itemE?.displayname[0]}
-                                      </div>
+                                      {itemE?.profilepic !== "" ? <><img src={itemE?.profilepic} className="pro-img" /></> :
+                                        <div
+                                          className="pro-img"
+                                          style={{
+                                            color: '#fff',
+                                            backgroundColor: `rgba(${Math.floor(
+                                              Math.random() * 256
+                                            )}, ${Math.floor(
+                                              Math.random() * 256
+                                            )}, ${Math.floor(
+                                              Math.random() * 256
+                                            )}, 0.6)`,
+                                          }}
+                                        >
+                                          {itemE?.displayname[0]}
+                                        </div>}
                                     </td>
                                     <td className="width-500px">
                                       {itemE?.emailid}
@@ -307,16 +211,17 @@ const Users = () => {
                                       ({moment(itemE?.createdAt).fromNow()})
                                     </td> */}
                                     <td className="width-300px tbl-title">
-                                    {moment(itemE?.createdAt).format("hh:mm A")}<span> (
-                                      {moment(itemE?.createdAt).fromNow()})</span>
-                                  </td>
+                                      {moment(itemE?.createdAt).format("DD-MM-yyyy hh:mm A")}
+                                      {/* <span> (
+                                        {moment(itemE?.createdAt).fromNow()})</span> */}
+                                    </td>
 
                                     <td className="width-500px text-center">
                                       {itemE?.usertype === "admin"
                                         ? "Administrator"
                                         : "User"}
                                     </td>
-                                    {UserData?.usertype !== "client" && itemE?.createdBy !== null && (
+                                    {UserData?.usertype !== "client" && itemE?.createdBy !== null ? (
                                       <td className="width-500px">
                                         <div className="d-flex     justify-content-end">
                                           {/* <span
@@ -353,7 +258,21 @@ const Users = () => {
                                           </span>
                                         </div>
                                       </td>
-                                    )}
+                                    ) :
+                                      <td className="width-500px">
+                                        <div className="d-flex     justify-content-end">
+                                          <span
+                                            // onClick={() =>
+                                            //   fnAddEditTransactions(
+                                            //     "Edit",
+                                            //     itemE
+                                            //   )
+                                            // }
+                                            onClick={() => setChangePWDModalShow(true)}
+                                            className="me-2"
+                                          >
+                                            <EditIcon />
+                                          </span></div></td>}
                                   </tr>
                                 )
                               )}
@@ -379,6 +298,13 @@ const Users = () => {
           data={SelectedTransactionData}
           bindList={bindList}
           onHide={() => setTransactionMOdalShow(false)}
+        />
+      )}
+      {ChangePWDModalShow && (
+        <ProfileUpdateModal
+          show={ChangePWDModalShow}
+          bindList={bindList}
+          onHide={() => setChangePWDModalShow(false)}
         />
       )}
     </>
